@@ -28,10 +28,13 @@ fn prompt_to_continue() -> bool {
     }
 }
 
-fn play( level_num: u32, max_range: u32) -> bool {
-
-    println!("\n--- Level {} (Guess a number between 1 and {}) ---", level_num, max_range);
-        let secret_number = rand::thread_rng().gen_range(1, max_range + 1);
+// --------------------------------------- Game Loop ----------------------------------- //
+fn play(level_num: u32, max_range: u32) -> bool {
+    println!(
+        "\n--- Level {} (Guess a number between 1 and {}) ---",
+        level_num, max_range
+    );
+    let secret_number = rand::thread_rng().gen_range(1, max_range + 1);
 
     loop {
         print!("Please input your guess: ");
@@ -52,15 +55,13 @@ fn play( level_num: u32, max_range: u32) -> bool {
             Ordering::Equal => {
                 println!("You win! 🥳");
                 return prompt_to_continue();
-                
             }
         }
     }
 }
 
-
-
-fn main () {
+// --------------------------------------- MAIN EXECUTER FUNCTION -------------------------- //
+fn main() {
     let game_title = r#"
               ██████╗ ██╗   ██╗███████╗███████╗███████╗██╗███╗   ██╗ ██████╗      ██████╗  █████╗ ███╗   ███╗███████╗
              ██╔════╝ ██║   ██║██╔════╝██╔════╝██╔════╝██║████╗  ██║██╔════╝     ██╔════╝ ██╔══██╗████╗ ████║██╔════╝
@@ -74,12 +75,21 @@ fn main () {
     println!("{}", game_title);
     println!("Guess the number!");
 
-    if play(1, 10) {
-        println!("Moving to Level 2...");
+    let level_number = [10, 50, 200, 500, 777];
+
+    for (index, &max_range) in level_number.iter().enumerate() {
+        let level_num = (index + 1) as u32;
+
+        let wants_to_continue = play(level_num, max_range);
+
+        if !wants_to_continue {
+            break;
+        };
+
+        if index > level_number.len() - 1 {
+            println!("Movin to level: {}", level_num + 1);
+        }
     }
 
-    play(1, 50);
     println!("Thanks for playing");
 }
-
-
