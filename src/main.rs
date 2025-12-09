@@ -45,7 +45,13 @@ fn play(level_num: u32, max_range: u32) -> bool {
             .read_line(&mut guess)
             .expect("Failed to real line");
 
-        let guess: u32 = guess.trim().parse().expect("Please type a number!");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("That is not a valid number. Please enter a number...");
+                continue;
+            }
+        };
 
         println!("You guessed: {}", guess);
 
@@ -88,6 +94,8 @@ fn main() {
 
         if index > level_number.len() - 1 {
             println!("Movin to level: {}", level_num + 1);
+        } else {
+            println!("\nCONGRATULATIONS!!!...You have completed the GAME!")
         }
     }
 
