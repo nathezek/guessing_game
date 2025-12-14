@@ -2,8 +2,8 @@
 
 // extenal dependencies
 extern crate rand;
-
 use rand::Rng;
+
 use std::cmp::Ordering;
 use std::io;
 use std::io::Write;
@@ -81,7 +81,7 @@ fn main() {
     println!("{}", game_title);
     println!("Guess the number!");
 
-    let level_number = [10, 50, 200, 500, 777];
+    let level_number = [10, 50, 200, 500, 777, 1000];
 
     for (index, &max_range) in level_number.iter().enumerate() {
         let level_num = (index + 1) as u32;
